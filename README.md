@@ -13,7 +13,7 @@ After installing Elixir, go in the root directory and run the following command:
 
 The client part of the dashboard uses ReactJS for the frontend framework.
 
-To run the client, you will need to install NodeJS (https://nodejs.org/en/) and npm. **Not*e*: npm is installed by default with NodeJS.
+To run the client, you will need to install NodeJS (https://nodejs.org/en/) and npm. **Note**: npm is installed by default with NodeJS.
 
 Next, go the `client/`directory and run `npm install`.
 
