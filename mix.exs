@@ -21,7 +21,7 @@ defmodule Webserver.MixProject do
   def application do
     [
       mod: {Webserver, []},
-      extra_applications: [:logger]
+      extra_applications: [:exfmt, :logger]
     ]
   end
 
@@ -34,6 +34,7 @@ defmodule Webserver.MixProject do
       {:plug, "~> 1.5.1"},
       {:cors_plug, "~> 1.5"},
       {:exsamples, "~> 0.1.0"},
+      {:exfmt, "~> 0.1.0"},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
   end
