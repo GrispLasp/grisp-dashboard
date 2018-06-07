@@ -37,6 +37,23 @@ defmodule Webserver.ApiRouter do
     send_resp(conn, 200, body)
   end
 
+  get "/testnodes" do
+    # TODO : poll edge to retrive measurements for each node
+
+    # crdt_list = Webserver.NodeClient.get_crdt()
+    # ping_result = Process.whereis(Webserver.NodePinger) |> :sys.get_state
+    # IO.puts "pinged nodes #{inspect ping_result}"
+    # nodes_map = Enum.into(crdt_list, [], fn {name, avg, counter, hour_avg, hour_data} ->
+    #   is_alive =  Enum.member?(ping_result[:pinged_nodes], name) # Check if node has been pinged, if so, mark as alive
+    #   %{:name => name, :avg => avg, :counter => counter, :hour_avg => hour_avg, :hour_data => hour_data, :alive => is_alive}
+    # end)
+    #
+    # nodes_map = %{:nodes => nodes_map, :last_ping_time => ping_result[:time_pinged]}
+    # IO.puts("nodes_map is #{inspect nodes_map}")
+    # body = Poison.encode!(nodes_map)
+    send_resp(conn, 200, :empty)
+  end
+
 
   get "/node/:node" do
     crdt_list = Webserver.NodeClient.get_crdt()

@@ -7,8 +7,16 @@ defmodule Webserver.NodeClient do
     GenServer.start_link(__MODULE__, :ok, opts)
   end
 
-  def get_crdt do
+  def get_crdt() do
     GenServer.call(__MODULE__, {:get_crdt})
+  end
+
+  def get_nodes() do
+    GenServer.call(__MODULE__, {:get_nodes})
+  end
+
+  def get_node(node) do
+    GenServer.call(__MODULE__, {:get_node, node})
   end
 
   ## Server Callbacks
@@ -22,6 +30,14 @@ defmodule Webserver.NodeClient do
     temps_list = :sets.to_list(temps_crdt)
     IO.puts "=== temps crdt #{inspect temps_list} ==="
     {:reply, temps_list, state}
+  end
+
+  def handle_call({:get_nodes}, _from, state) do
+
+    # {:ok, temps_crdt} = :lasp.query({<<"temp">>, :state_orset})
+    # temps_list = :sets.to_list(temps_crdt)
+    # IO.puts "=== temps crdt #{inspect temps_list} ==="
+    {:reply, :ok, state}
   end
 
 
