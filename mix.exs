@@ -6,14 +6,15 @@ defmodule Webserver.MixProject do
       app: :webserver,
       version: "0.1.0",
       elixir: "~> 1.6",
+      build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       dialyzer: [
-                plt_add_deps: :transitive,
-                flags: [:unmatched_returns,:error_handling,:race_conditions, :no_opaque],
-                paths: ["_build/dev/lib/webserver/ebin"],
-                dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"]
-              ]
+        plt_add_deps: :transitive,
+        flags: [:unmatched_returns, :error_handling, :race_conditions, :no_opaque],
+        paths: ["_build/dev/lib/webserver/ebin"],
+        dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"]
+      ]
     ]
   end
 

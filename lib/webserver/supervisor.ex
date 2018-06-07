@@ -8,7 +8,7 @@ defmodule Webserver.Supervisor do
   def init(:ok) do
     children = [
       {Webserver.NodePinger, name: Webserver.NodePinger},
-      {Webserver.NodeClient, name: Webserver.NodeClient},
+      {Webserver.NodeClient, name: Webserver.NodeClient}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
