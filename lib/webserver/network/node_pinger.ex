@@ -33,7 +33,8 @@ defmodule Webserver.NodePinger do
 
   def full_ping_fun() do
     IO.puts "Starting full ping"
-    nodes_list = [:generic_node_1@GrispAdhoc, :generic_node_2@GrispAdhoc]
+    # nodes_list = [:generic_node_1@GrispAdhoc, :generic_node_2@GrispAdhoc]
+    nodes_list = [:node@my_grisp_board_10]
     for node <- nodes_list, :net_adm.ping(node) == :pong, do: fn node ->
       :lasp_peer_service.join(node)
       IO.puts "joined #{node}"

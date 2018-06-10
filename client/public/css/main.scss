@@ -154,16 +154,41 @@ body {
             margin-bottom:0;
           }
 
-          .charts{
+          .charts-container{
             display: flex;
             flex:1;
+            height: 60vh;
+            width: 75vw;
+            flex-direction: column;
+
+            .charts{
+              display: flex;
+              flex:1;
+            }
+
+            .chart-title{
+              position: relative;
+              top:15px;
+              font-size:20px;
+              font-weight: 600;
+            }
+
           }
 
-          .chart-title{
-            position: relative;
-            top:15px;
-            font-size:20px;
-            font-weight: 600;
+
+          .react-tabs{
+            display: flex;
+            flex-direction: column;
+            width:80%;
+            margin-top:20px;
+          }
+
+          .react-tabs__tab-list{
+            margin-bottom:10px!important;
+          }
+
+          .react-tabs__tab--selected{
+            border-radius: 0px;
           }
 
 
