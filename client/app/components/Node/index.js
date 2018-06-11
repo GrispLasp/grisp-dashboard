@@ -8,6 +8,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Overview from './OverviewView';
 import Light from './LightView';
 import Temperature from './TemperatureView';
+import Gyro from './GyroView';
 import Room from './RoomView';
 import 'react-tabs/style/react-tabs.scss';
 
@@ -94,6 +95,7 @@ class NodeView extends React.Component {
                                               <Tab>Overview </Tab>
                                               <Tab>Temperature</Tab>
                                               <Tab>Light</Tab>
+                                              <Tab>Gyro</Tab>
                                               <Tab>Room</Tab>
                                           </TabList>
 
@@ -107,6 +109,10 @@ class NodeView extends React.Component {
 
                                           <TabPanel>
                                               <Light node={node}/>
+                                          </TabPanel>
+
+                                          <TabPanel>
+                                              <Gyro node={node}/>
                                           </TabPanel>
 
                                           <TabPanel>

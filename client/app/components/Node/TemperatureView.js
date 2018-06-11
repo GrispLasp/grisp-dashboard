@@ -15,7 +15,7 @@ export default class TemperatureView extends React.Component {
         console.log(node)
         if (node && !this.state.hourChartData) {
             console.log("hey!!!")
-            this.generateTempData(node)
+            this.generateTempData(node.temps_state)
         }
 
     }
@@ -23,7 +23,7 @@ export default class TemperatureView extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.props.node) {
             if (!_.isEqual(prevProps.node, this.props.node)) {
-                this.generateTempData(this.props.node)
+                this.generateTempData(this.props.node.temps_state)
             }
         }
     }
@@ -36,7 +36,7 @@ export default class TemperatureView extends React.Component {
 
     generateTempData(nodeData) {
 
-        // console.log(nodeData)
+        console.log(nodeData)
 
         let steps = nodeData.hour_data.map((hourTemp, index) => {
             return {x: index, y: hourTemp}
@@ -53,11 +53,12 @@ export default class TemperatureView extends React.Component {
 
     render() {
         const {node} = this.props;
+        console.log("NODEE!!!!!")
         console.log(node)
         console.log(this.state.hourChartData)
 
         if (node && !this.state.hourChartData) {
-            this.generateTempData(node)
+            this.generateTempData(node.temps_state)
         }
 
         return (<div>
@@ -71,11 +72,11 @@ export default class TemperatureView extends React.Component {
                     ? <div>
 
                             <p>Average temperature :
-                                <b>{node.avg.toFixed(2)}
+                                <b>{node.temps_state.avg.toFixed(2)}
                                     °C</b>
                             </p>
                             <p>Hours passed:
-                                <b>{node.counter}h</b>
+                                <b>{node.temps_state.counter}h</b>
                             </p>
 
                             <div className="charts-container">

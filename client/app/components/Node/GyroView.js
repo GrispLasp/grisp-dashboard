@@ -1,20 +1,21 @@
 import React, {PropTypes} from 'react';
 import {ResponsiveLine} from '@nivo/line'
 import _ from 'lodash'
-export default class LightView extends React.Component {
+
+export default class GyroView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        lightChartData: null
+        gyroChartData: null
     }
   }
 
   componentDidMount() {
       const {node} = this.props;
       console.log(node)
-      if (node && !this.state.hourChartData) {
+      if (node && !this.state.gyroChartData) {
           console.log("hey!!!")
-          this.generateLightData(node.als_state)
+          this.generateGyroData(node.gyro_state)
       }
 
   }
@@ -22,33 +23,59 @@ export default class LightView extends React.Component {
   componentDidUpdate(prevProps, prevState) {
       if (this.props.node) {
           if (!_.isEqual(prevProps.node, this.props.node)) {
-              this.generateLightData(this.props.node.als_state)
+              this.generateGyroData(this.props.node.gyro_state)
           }
       }
   }
 
-  generateLightData(nodeData) {
+  generateGyroData(nodeData) {
 
       console.log(nodeData)
 
-      let steps = nodeData.map((light, index) => {
-          return {x: index, y: light}
+      let xData = nodeData.map((gyro, index) => {
+          return {x: index, y: gyro[0]}
       })
-      // console.log(steps)
-
-      let chartData = {
-          data: steps
+      let x = {
+        "id": "x",
+        "color": "hsl(59, 70%, 50%)",
+        "data": xData
       }
 
-      this.setState({lightChartData: [chartData]})
+      let yData = nodeData.map((gyro, index) => {
+          return {x: index, y: gyro[1]}
+      })
+      let y = {
+        "id": "y",
+        "color": "hsl(227, 70%, 50%)",
+        "data": yData
+      }
+
+      let zData = nodeData.map((gyro, index) => {
+          return {x: index, y: gyro[2]}
+      })
+      let z = {
+        "id": "z",
+        "color": "hsl(268, 70%, 50%)",
+        "data": zData
+      }
+
+      let data = [
+        x,
+        y,
+        z
+      ]
+
+
+
+      this.setState({gyroChartData: data})
 
   }
 
   render() {
     const {node} = this.props;
 
-    if (node && !this.state.lightChartData) {
-        this.generateLightData(node.als_state)
+    if (node && !this.state.gyroChartData) {
+        this.generateGyroData(node.gyro_state)
     }
     return (<div>
 
@@ -57,15 +84,15 @@ export default class LightView extends React.Component {
       </h1>
 
         {
-            node && this.state.lightChartData
+            node && this.state.gyroChartData
                 ? <div>
 
                   <div className="charts-container">
 
                       <div className="chart-title">
-                          Light/10 seconds chart</div>
+                          Accelerometer/10 seconds chart</div>
                       <div className="charts">
-                          <ResponsiveLine data={this.state.lightChartData} curve="natural" margin={{
+                          <ResponsiveLine data={this.state.gyroChartData} curve="natural" margin={{
                                   "top" : 50,
                                   "right" : 110,
                                   "bottom" : 50,
@@ -83,10 +110,10 @@ export default class LightView extends React.Component {
                                   "tickSize" : 5,
                                   "tickPadding" : 5,
                                   "tickRotation" : 0,
-                                  "legend" : "Light intensity",
+                                  "legend" : "Axises",
                                   "legendOffset" : -40,
                                   "legendPosition" : "center"
-                              }} dotSize={10} colors="pastel2" dotColor="inherit:darker(0.3)" dotBorderWidth={2} dotBorderColor="#ffffff" enableDotLabel={true} dotLabel="y" dotLabelYOffset={-12} animate={true} motionStiffness={90} motionDamping={15} legends={[{
+                              }} dotSize={10} colors="set3" dotColor="inherit:darker(0.3)" dotBorderWidth={2} dotBorderColor="#ffffff" enableDotLabel={true} dotLabel="y" dotLabelYOffset={-12} animate={true} motionStiffness={90} motionDamping={15} legends={[{
                                       "anchor": "bottom-right",
                                       "direction": "column",
                                       "translateX": 100,
