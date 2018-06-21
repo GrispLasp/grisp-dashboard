@@ -3,25 +3,25 @@
 use Mix.Config
 
 config :webserver, port: 8081
-config :lasp, [
+
+config :lasp,
   membership: true,
   mode: :state_based,
   storage_backend: :lasp_ets_storage_backend,
   delta_interval: 100
-]
-config :plumtree, [
+
+config :plumtree,
   broadcast_exchange_timer: 100,
   broadcast_mods: [:lasp_plumtree_backend]
-]
-config :partisan, [
+
+config :partisan,
   partisan_peer_service_manager: :partisan_hyparview_peer_service_manager,
   partisan_port: 50000
-]
-config :lager,  [
+
+config :lager,
   handlers: [
-    lager_console_backend: :critical,
+    lager_console_backend: :critical
   ]
-]
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this

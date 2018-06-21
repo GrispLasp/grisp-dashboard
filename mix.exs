@@ -9,11 +9,11 @@ defmodule Webserver.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       dialyzer: [
-                plt_add_deps: :transitive,
-                flags: [:unmatched_returns,:error_handling,:race_conditions, :no_opaque],
-                paths: ["_build/dev/lib/webserver/ebin"],
-                dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"]
-              ]
+        plt_add_deps: :transitive,
+        flags: [:unmatched_returns, :error_handling, :race_conditions, :no_opaque],
+        paths: ["_build/dev/lib/webserver/ebin"],
+        dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"]
+      ]
     ]
   end
 
@@ -34,6 +34,7 @@ defmodule Webserver.MixProject do
       {:plug, "~> 1.5.1"},
       {:cors_plug, "~> 1.5"},
       {:exsamples, "~> 0.1.0"},
+      # TODO : compare exfmt vs mix format (probably not worth it) 
       {:exfmt, "~> 0.1.0"},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
