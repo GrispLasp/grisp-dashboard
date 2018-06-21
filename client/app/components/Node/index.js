@@ -2,13 +2,30 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux'
 import {fetchNodes} from '../../../actions/nodes-actions'
 import _ from 'lodash'
-import {ResponsiveLine} from '@nivo/line'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
+
+import Overview from './OverviewView';
+import Light from './LightView';
+import Temperature from './TemperatureView';
+import Gyro from './GyroView';
+import Room from './RoomView';
+import 'react-tabs/style/react-tabs.scss';
 
 class NodeView extends React.Component {
     constructor(props) {
         super(props);
+        const tabs = ["overview", "temperature", "light", "room"];
+        let tabIndex = 0;
+        if (this.props.location.hash !== '') {
+            const hash = this.props.location.hash.substr(1, this.props.location.hash.length)
+            tabIndex = tabs.indexOf(hash)
+        }
+        // console.log(tabIndex)
         this.state = {
-            hourChartData: null
+            hourChartData: null,
+            tabIndex: tabIndex,
+            tabs: tabs,
         }
     }
 
@@ -18,6 +35,11 @@ class NodeView extends React.Component {
         this.setState({intervalId: intervalId});
     }
 
+    componentWillUpdate(nextProps, nextState) {
+        if (this.props.match.params.nodeName !== nextProps.match.params.nodeName) {
+            this.setState({tabIndex: 0})
+        }
+    }
 
     componentDidUpdate(prevProps, prevState) {
 
@@ -25,7 +47,7 @@ class NodeView extends React.Component {
           if(prevProps.match.params.nodeName !== this.props.match.params.nodeName
             || !_.isEqual(prevProps.nodes, this.props.nodes)){
             let nodeData = this.getNode()
-            this.generateTempData(nodeData)
+            // this.generateTempData(nodeData)
           }
         }
     }
@@ -46,22 +68,13 @@ class NodeView extends React.Component {
       }).bind(this));
     }
 
-    generateTempData(nodeData) {
 
-        // console.log(nodeData)
 
-        let steps = nodeData.hour_data.map((hourTemp, index) => {
-            return {x: index, y: hourTemp}
-        })
-        // console.log(steps)
-
-        let chartData = {
-            data: steps
-        }
-
-        this.setState({currentNode: nodeData.name, hourChartData: [chartData]})
-
+    changeTab = (index, lastIndex, e) => {
+        this.props.history.push("#" + this.state.tabs[index])
+        this.setState({tabIndex: index})
     }
+
 
     render() {
         const {nodes} = this.props
@@ -70,64 +83,49 @@ class NodeView extends React.Component {
         let node;
         if (nodes) {
             node = this.getNode()
-            if(node && !this.state.hourChartData){
-              this.generateTempData(node)
-            }
-
         }
 
         return (<div id="main">
-            {
-                node && this.state.hourChartData
-                    ? <div className="main-container">
 
-                            <h1>
-                                Node
-                            </h1>
+                   <div className="main-container">
+
+
+                      <Tabs onSelect={this.changeTab} selectedIndex={this.state.tabIndex}>
+                                          <TabList>
+                                              <Tab>Overview </Tab>
+                                              <Tab>Temperature</Tab>
+                                              <Tab>Light</Tab>
+                                              <Tab>Gyro</Tab>
+                                              <Tab>Room</Tab>
+                                          </TabList>
+
+                                          <TabPanel>
+                                              <Overview node={node}/>
+                                          </TabPanel>
+
+                                          <TabPanel>
+                                              <Temperature node={node}/>
+                                          </TabPanel>
+
+                                          <TabPanel>
+                                              <Light node={node}/>
+                                          </TabPanel>
+
+                                          <TabPanel>
+                                              <Gyro node={node}/>
+                                          </TabPanel>
+
+                                          <TabPanel>
+                                              <Room node={node}/>
+                                          </TabPanel>
+
+                                      </Tabs>
+
+
                             {/* {JSON.stringify(node, null, 2)} */}
 
-                            <p>Distributed node name: <b>{node.name}</b></p>
-                            <p>Average temperature : <b>{node.avg.toFixed(2)} °C</b></p>
-                            <p>Hours passed: <b>{node.counter}h</b></p>
-
-
-                            <div className="chart-title"> Temperature/hour chart</div>
-                            <div className="charts">
-                                <ResponsiveLine data={this.state.hourChartData} curve="natural" margin={{
-                                        "top" : 50,
-                                        "right" : 110,
-                                        "bottom" : 50,
-                                        "left" : 60
-                                    }} minY="auto" stacked={true} axisBottom={{
-                                        "orient" : "bottom",
-                                        "tickSize" : 5,
-                                        "tickPadding" : 5,
-                                        "tickRotation" : 0,
-                                        "legend" : "hour",
-                                        "legendOffset" : 36,
-                                        "legendPosition" : "center"
-                                    }} axisLeft={{
-                                        "orient" : "left",
-                                        "tickSize" : 5,
-                                        "tickPadding" : 5,
-                                        "tickRotation" : 0,
-                                        "legend" : "temperature",
-                                        "legendOffset" : -40,
-                                        "legendPosition" : "center"
-                                    }} dotSize={10} colors="pastel1" dotColor="inherit:darker(0.3)" dotBorderWidth={2} dotBorderColor="#ffffff" enableDotLabel={true} dotLabel="y" dotLabelYOffset={-12} animate={true} motionStiffness={90} motionDamping={15} legends={[{
-                                            "anchor": "bottom-right",
-                                            "direction": "column",
-                                            "translateX": 100,
-                                            "itemWidth": 80,
-                                            "itemHeight": 20,
-                                            "symbolSize": 12,
-                                            "symbolShape": "circle"
-                                        }
-                                    ]}/>
-                            </div>
                         </div>
-                    : null
-            }
+
 
         </div>);
     }

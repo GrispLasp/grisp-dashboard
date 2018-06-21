@@ -21,27 +21,34 @@ defmodule Webserver.ApiRouter do
   end
 
   get "/nodes" do
-    crdt_list = Webserver.NodeClient.get_crdt()
-    ping_result = Process.whereis(Webserver.NodePinger) |> :sys.get_state()
-    IO.puts("pinged nodes #{inspect(ping_result)}")
+    {crdt_temps,crdt_states} = Webserver.NodeClient.get_crdt()
+    ping_result = Process.whereis(Webserver.NodePinger) |> :sys.get_state
+    IO.puts "pinged nodes #{inspect ping_result}"
+    nodes_temps = Enum.into(crdt_temps, [], fn {name, avg, counter, hour_avg, hour_data} ->
+      is_alive =  Enum.member?(ping_result[:pinged_nodes], name) # Check if node has been pinged, if so, mark as alive
+      %{:name => name, :alive => is_alive, :temps_state => %{:avg => avg, :counter => counter, :hour_avg => hour_avg, :hour_data => hour_data}}
+    end)
 
-    nodes_map =
-      Enum.into(crdt_list, [], fn {name, avg, counter, hour_avg, hour_data} ->
-        # Check if node has been pinged, if so, mark as alive
-        is_alive = Enum.member?(ping_result[:pinged_nodes], name)
+    nodes_states = Enum.into(crdt_states, [], fn(node) ->
+      # IO.puts "node is #{inspect node}"
+      node_name = elem(node, 0)
+      state = elem(node, 1)
+      als_state = elem(state, 1)
+      gyro_state_tuples = elem(state, 3)
+      gyro_state = Enum.into(gyro_state_tuples, [], fn gyro -> Tuple.to_list(gyro) end)
+      %{:name => node_name, :als_state => als_state, :gyro_state => gyro_state}
+      # IO.puts "node name is #{inspect node_name}"
+    end)
 
-        %{
-          :name => name,
-          :avg => avg,
-          :counter => counter,
-          :hour_avg => hour_avg,
-          :hour_data => hour_data,
-          :alive => is_alive
-        }
-      end)
+    nodes = for t <- nodes_temps, s <- nodes_states, do: fn (t,s) ->
+      # IO.puts "t is #{inspect t}"
+      if t[:name] == s[:name] do
+        Map.merge(t,s)
+      end
+    end.(t,s)
 
-    nodes_map = %{:nodes => nodes_map, :last_ping_time => ping_result[:time_pinged]}
-    IO.puts("nodes_map is #{inspect(nodes_map)}")
+    nodes_map = %{:nodes => nodes,:last_ping_time => ping_result[:time_pinged]}
+    IO.puts("nodes_map is #{inspect nodes_map}")
     body = Poison.encode!(nodes_map)
     send_resp(conn, 200, body)
   end
