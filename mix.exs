@@ -21,7 +21,15 @@ defmodule Webserver.MixProject do
   def application do
     [
       mod: {Webserver, []},
-      applications: [:numerix, :gen_stage, :flow],
+      applications: [
+        :numerix,
+        :gen_stage,
+        :flow,
+        :cowboy,
+        :plug,
+        :partisan,
+        :lasp
+      ],
       extra_applications: [:exfmt, :logger]
     ]
   end
