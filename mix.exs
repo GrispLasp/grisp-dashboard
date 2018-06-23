@@ -21,6 +21,7 @@ defmodule Webserver.MixProject do
   def application do
     [
       mod: {Webserver, []},
+      applications: [:numerix, :gen_stage, :flow],
       extra_applications: [:exfmt, :logger]
     ]
   end
@@ -34,7 +35,8 @@ defmodule Webserver.MixProject do
       {:plug, "~> 1.5.1"},
       {:cors_plug, "~> 1.5"},
       {:exsamples, "~> 0.1.0"},
-      # TODO : compare exfmt vs mix format (probably not worth it) 
+      {:numerix, "~> 0.5.1"},
+      # TODO : compare exfmt vs mix format (probably not worth it)
       {:exfmt, "~> 0.1.0"},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]

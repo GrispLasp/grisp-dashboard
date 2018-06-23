@@ -2,7 +2,10 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :webserver, port: 8081
+config :webserver,
+    port: 8081,
+    # mode: :computation_only
+    mode: :full
 
 config :lasp,
   membership: true,

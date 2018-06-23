@@ -6,10 +6,20 @@ defmodule Webserver.Supervisor do
   end
 
   def init(:ok) do
-    children = [
-      {Webserver.NodePinger, name: Webserver.NodePinger},
-      {Webserver.NodeClient, name: Webserver.NodeClient}
-    ]
+    children = case Webserver.mode() do
+        :computation_only ->
+            [
+                {Webserver.Regression, name: Webserver.Regression}
+            ]
+        :full ->
+            [
+                {Webserver.NodePinger, name: Webserver.NodePinger},
+                {Webserver.NodeClient, name: Webserver.NodeClient},
+                {Webserver.Regression, name: Webserver.Regression}
+            ]
+        _ ->
+            []
+    end
 
     Supervisor.init(children, strategy: :one_for_one)
   end
