@@ -4,10 +4,7 @@
   "cowboy": {:hex, :cowboy, "2.4.0", "f1b72fabe9c8a5fc64ac5ac85fb65474d64733d1df52a26fad5d4ba3d9f70a9f", [:rebar3], [{:cowlib, "~> 2.3.0", [hex: :cowlib, repo: "hexpm", optional: false]}, {:ranch, "~> 1.5.0", [hex: :ranch, repo: "hexpm", optional: false]}], "hexpm"},
   "cowlib": {:hex, :cowlib, "2.3.0", "bbd58ef537904e4f7c1dd62e6aa8bc831c8183ce4efa9bd1150164fe15be4caa", [:rebar3], [], "hexpm"},
   "dialyxir": {:hex, :dialyxir, "0.5.1", "b331b091720fd93e878137add264bac4f644e1ddae07a70bf7062c7862c4b952", [:mix], [], "hexpm"},
-<<<<<<< HEAD
-=======
   "dialyzex": {:hex, :dialyzex, "1.1.2", "759e6f27aaf0074cf392571e22d1a4722f92aa79e7077be2ed30c14da6dce793", [:mix], [], "hexpm"},
->>>>>>> feature-stream
   "exfmt": {:hex, :exfmt, "0.1.0", "b03a1d0e241f3776aa5c325e1553637a67b1952b0fed54b1196af1da338db8e7", [:mix], [], "hexpm"},
   "exsamples": {:hex, :exsamples, "0.1.0", "d048bcd815c7be5de22515d1b0f387e756fe2b04d386b72d17e39ba0da5d17b5", [:mix], [], "hexpm"},
   "gen_flow": {:hex, :gen_flow, "0.0.5", "2ff6abe3ed1c5c9bc41f81bf09364a3f63f96e4d378d45a2a2ddc4fc06f3484a", [:rebar3], [], "hexpm"},
