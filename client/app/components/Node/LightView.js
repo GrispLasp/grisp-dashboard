@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react';
-import {ResponsiveLine} from '@nivo/line'
+import Plot from 'react-plotly.js';
 import _ from 'lodash'
+
 export default class LightView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        lightChartData: null
+        scatterPlot: null
     }
   }
 
@@ -13,8 +14,7 @@ export default class LightView extends React.Component {
       const {node} = this.props;
       console.log(node)
       if (node && !this.state.hourChartData) {
-          console.log("hey!!!")
-          this.generateLightData(node.als_state)
+          this.generateScatterPlot(node.als_state)
       }
 
   }
@@ -22,33 +22,38 @@ export default class LightView extends React.Component {
   componentDidUpdate(prevProps, prevState) {
       if (this.props.node) {
           if (!_.isEqual(prevProps.node, this.props.node)) {
-              this.generateLightData(this.props.node.als_state)
+              this.generateScatterPlot(this.props.node.als_state)
           }
       }
   }
 
-  generateLightData(nodeData) {
+  generateScatterPlot = (nodeData) => {
 
-      console.log(nodeData)
+      let trace1 = {
+          x: nodeData.data.xs,
+          y: nodeData.data.ys,
+          type: 'scatter',
+          mode: 'markers',
+          marker: {color: 'red'},
+      };
 
-      let steps = nodeData.map((light, index) => {
-          return {x: index, y: light}
-      })
-      // console.log(steps)
 
-      let chartData = {
-          data: steps
-      }
+      var data = [trace1];
 
-      this.setState({lightChartData: [chartData]})
+      var layout = {
+          title: 'Scatter Plot'
+      };
+      let res = {data: data, layout: layout}
+
+      this.setState({scatterPlot: res})
 
   }
 
   render() {
     const {node} = this.props;
-
-    if (node && !this.state.lightChartData) {
-        this.generateLightData(node.als_state)
+    console.log(node)
+    if (node && !this.state.scatterPlot) {
+        this.generateScatterPlot(node.als_state)
     }
     return (<div>
 
@@ -57,45 +62,14 @@ export default class LightView extends React.Component {
       </h1>
 
         {
-            node && this.state.lightChartData
+            node && this.state.scatterPlot
                 ? <div>
 
                   <div className="charts-container">
 
-                      <div className="chart-title">
-                          Light/10 seconds chart</div>
                       <div className="charts">
-                          <ResponsiveLine data={this.state.lightChartData} curve="natural" margin={{
-                                  "top" : 50,
-                                  "right" : 110,
-                                  "bottom" : 50,
-                                  "left" : 60
-                              }} minY="auto" stacked={true} axisBottom={{
-                                  "orient" : "bottom",
-                                  "tickSize" : 5,
-                                  "tickPadding" : 5,
-                                  "tickRotation" : 0,
-                                  "legend" : "10 seconds",
-                                  "legendOffset" : 36,
-                                  "legendPosition" : "center"
-                              }} axisLeft={{
-                                  "orient" : "left",
-                                  "tickSize" : 5,
-                                  "tickPadding" : 5,
-                                  "tickRotation" : 0,
-                                  "legend" : "Light intensity",
-                                  "legendOffset" : -40,
-                                  "legendPosition" : "center"
-                              }} dotSize={10} colors="pastel2" dotColor="inherit:darker(0.3)" dotBorderWidth={2} dotBorderColor="#ffffff" enableDotLabel={true} dotLabel="y" dotLabelYOffset={-12} animate={true} motionStiffness={90} motionDamping={15} legends={[{
-                                      "anchor": "bottom-right",
-                                      "direction": "column",
-                                      "translateX": 100,
-                                      "itemWidth": 80,
-                                      "itemHeight": 20,
-                                      "symbolSize": 12,
-                                      "symbolShape": "circle"
-                                  }
-                              ]}/>
+                        <Plot data={this.state.scatterPlot.data}
+                           layout={this.state.scatterPlot.layout}/>
                       </div>
                   </div>
 

@@ -4,22 +4,20 @@ import {connect} from 'react-redux'
 import {fetchNodesIfNeeded} from '../../../../actions/nodes-actions'
 import moment from 'moment'
 
-
 class SidebarView extends React.Component {
     constructor(props) {
         super(props);
     }
 
     goToUrl = (e, url) => {
-      e.preventDefault();
-      this.props.history.push(url);
+        e.preventDefault();
+        this.props.history.push(url);
     }
 
     componentDidMount() {
         const {dispatch} = this.props
         dispatch(fetchNodesIfNeeded())
     }
-
 
     render() {
         const {nodes, lastPingTime} = this.props
@@ -28,6 +26,7 @@ class SidebarView extends React.Component {
             sortedNodes = _.sortBy(nodes, (n) => {
                 return n.name
             });
+            sortedNodes.push({name: "All"})
         }
 
         return (<div id="sidebar">
@@ -50,12 +49,17 @@ class SidebarView extends React.Component {
                                         {
                                             sortedNodes
                                                 ? sortedNodes.map((node, index) => {
-                                                    return <li key={index} onClick={(e) => this.goToUrl(e, `/node/${node.name}`)}>
-                                                        <a><span className={node.alive
-                                                            ? "online"
-                                                            : "offline"}/> {node.name.split('@')[0]}</a>
-                                                    </li>
-                                                })
+                                                    if (node.name === 'All') {
+                                                      return <li key={index} onClick={(e) => this.goToUrl(e, `/nodes`)}>
+                                                          <a><span className="online"/> All</a>
+                                                      </li>
+                                                    } else {
+                                                        return <li key={index} onClick={(e) => this.goToUrl(e, `/node/${node.name}`)}>
+                                                            <a><span className={node.alive
+                                                                ? "online"
+                                                                : "offline"}/> {node.name.split('@')[0]}</a>
+                                                        </li>
+                                                    }})
                                                 : null
                                         }
                                     </ul>

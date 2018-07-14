@@ -14,7 +14,6 @@ export default class TemperatureView extends React.Component {
         const {node} = this.props;
         console.log(node)
         if (node && !this.state.hourChartData) {
-            console.log("hey!!!")
             this.generateTempData(node.temps_state)
         }
 
@@ -53,7 +52,6 @@ export default class TemperatureView extends React.Component {
 
     render() {
         const {node} = this.props;
-        console.log("NODEE!!!!!")
         console.log(node)
         console.log(this.state.hourChartData)
 

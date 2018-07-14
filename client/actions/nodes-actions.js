@@ -37,7 +37,7 @@ function receiveNodes(json) {
 export function fetchNodes() {
   return dispatch => {
     dispatch(requestNodes())
-    return fetch(`${Config.getEndpoint()}/nodes`)
+    return fetch(`${Config.getEndpoint()}/nodes-test`)
       .then(response => response.json())
       .then(json => {dispatch(receiveNodes(json))})
   }
