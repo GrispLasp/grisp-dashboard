@@ -3,9 +3,12 @@
 use Mix.Config
 
 config :webserver,
-    port: 8081,
+    port: 4000,
+    # remote_hosts: ["${REMOTE_HOST_1}"],
+    remote_hosts: ["server1@ec2-18-185-18-147.eu-central-1.compute.amazonaws.com"],
+    mode: :test
     # mode: :computation_only
-    mode: :full
+    # mode: :full
 
 config :lasp,
   membership: true,
@@ -19,12 +22,14 @@ config :plumtree,
 
 config :partisan,
   partisan_peer_service_manager: :partisan_hyparview_peer_service_manager,
-  partisan_port: 50000
+  peer_port: 55500
+  # peer_port: Integer.parse("${PEER_PORT}")
+  # peer_ip: :'18.185.18.147'
 
-config :lager,
-  handlers: [
-    lager_console_backend: :critical
-  ]
+# config :lager,
+#   handlers: [
+#     level: :critical
+#   ]
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this

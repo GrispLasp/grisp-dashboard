@@ -23,6 +23,10 @@ defmodule Webserver.Supervisor do
                 {Webserver.NodeClient, name: Webserver.NodeClient},
                 {Webserver.Regression, name: Webserver.Regression}
             ]
+        :test ->
+            [
+                {Webserver.NodePinger, name: Webserver.NodePinger}
+            ]
         _ ->
             []
     end

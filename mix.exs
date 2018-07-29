@@ -7,13 +7,13 @@ defmodule Webserver.MixProject do
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
-      deps: deps(),
-      dialyzer: [
-        plt_add_deps: :transitive,
-        flags: [:unmatched_returns, :error_handling, :race_conditions, :no_opaque],
-        paths: ["_build/dev/lib/webserver/ebin"],
-        dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"]
-      ]
+      deps: deps()
+      # dialyzer: [
+      #   plt_add_deps: :transitive,
+      #   flags: [:unmatched_returns, :error_handling, :race_conditions, :no_opaque],
+      #   paths: ["_build/dev/lib/webserver/ebin"],
+      #   dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"]
+      # ]
     ]
   end
 
@@ -30,7 +30,7 @@ defmodule Webserver.MixProject do
         :partisan,
         :lasp
       ],
-      extra_applications: [:exfmt, :logger]
+      extra_applications: [:logger]
     ]
   end
 
@@ -39,14 +39,14 @@ defmodule Webserver.MixProject do
     [
       {:cowboy, "~> 2.4.0"},
       {:lasp, "~> 0.8.2"},
+      # {:types, "~> 0.1.8", override: true},
+      {:partisan, git: "https://github.com/lasp-lang/partisan.git", override: true},
       {:poison, "~> 3.1"},
       {:plug, "~> 1.5.1"},
-      {:cors_plug, "~> 1.5"},
-      {:exsamples, "~> 0.1.0"},
+      # {:cors_plug, "~> 1.5"},
       {:numerix, "~> 0.5.1"},
-      # TODO : compare exfmt vs mix format (probably not worth it)
-      {:exfmt, "~> 0.1.0"},
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
+      {:distillery, "~> 1.5", runtime: false},
+      # {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
   end
 end

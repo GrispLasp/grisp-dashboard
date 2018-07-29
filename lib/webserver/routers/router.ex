@@ -5,7 +5,7 @@ defmodule Webserver.Router do
     use Plug.Debugger
   end
 
-  plug(CORSPlug, origin: "*")
+  # plug(CORSPlug, origin: "*")
   plug(:match)
   plug(:dispatch)
 

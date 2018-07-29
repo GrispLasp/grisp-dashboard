@@ -1,0 +1,23 @@
+version: '3'
+services:
+  $AWS_ECS_CONTAINER_NAME:
+    image: '$AWS_ECS_URL/$AWS_ECS_DOCKER_IMAGE'
+    environment:
+      - HOST=$HOST
+      - NODE_NAME=$NODE_NAME
+      - REMOTE_HOST_1=$REMOTE_HOST_1
+      - PEER_PORT=$PEER_PORT
+      - REPLACE_OS_VARS=true
+    hostname: $HOSTNAME
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "4000:4000"
+      - "4369:4369"
+      - "9001:9001"
+      - "9002:9002"
+      - "55500:55500"
+      - "55501:55501"
+    extra_hosts:
+      - "ec2-18-185-18-147.eu-central-1.compute.amazonaws.com:172.17.0.2"
+      - "ec2-18-206-71-67.compute-1.amazonaws.com:172.17.0.2"
