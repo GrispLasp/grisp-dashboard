@@ -4,28 +4,26 @@ use Mix.Config
 
 config :webserver,
     port: 4000,
-    # remote_hosts: ["${REMOTE_HOST_1}"],
-    remote_hosts: ["server1@ec2-18-185-18-147.eu-central-1.compute.amazonaws.com"],
+    remote_hosts: ["${REMOTE_HOST_1}"],
     mode: :test
     # mode: :computation_only
     # mode: :full
 
 config :lasp,
-  membership: true,
-  mode: :state_based,
+  membership: false,
+  mode: :delta_based,
   storage_backend: :lasp_ets_storage_backend,
-  delta_interval: 100
+  delta_interval: 10000,
+  plumtree_peer_refresh_interval: 2000,
+  state_sync_interval:  2000
 
 config :plumtree,
-  broadcast_exchange_timer: 100,
+  broadcast_exchange_timer: 2000,
   broadcast_mods: [:lasp_plumtree_backend]
 
 config :partisan,
   partisan_peer_service_manager: :partisan_hyparview_peer_service_manager,
-  peer_port: 55500
-  # peer_port: Integer.parse("${PEER_PORT}")
-  # peer_ip: :'18.185.18.147'
-
+  channels: [1,2]
 # config :lager,
 #   handlers: [
 #     level: :critical

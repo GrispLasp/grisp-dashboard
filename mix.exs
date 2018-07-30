@@ -40,7 +40,7 @@ defmodule Webserver.MixProject do
       {:cowboy, "~> 2.4.0"},
       {:lasp, "~> 0.8.2"},
       # {:types, "~> 0.1.8", override: true},
-      {:partisan, git: "https://github.com/lasp-lang/partisan.git", override: true},
+      {:partisan, git: "https://github.com/GrispLasp/partisan.git", override: true},
       {:poison, "~> 3.1"},
       {:plug, "~> 1.5.1"},
       # {:cors_plug, "~> 1.5"},

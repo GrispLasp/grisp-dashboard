@@ -18,7 +18,7 @@ defmodule Webserver do
     # Logger.info("host is: #{inspect  Application.get_env(:webserver, :host)}")
     Logger.info("#{inspect :net_adm.names()}")
     Logger.info("#{inspect :net_adm.localhost()}")
-    Logger.info("#{inspect Node.self()} ----")
+    Logger.info("#{inspect Node.self()}")
     Logger.info("#{inspect Node.get_cookie()}")
 
     children = [

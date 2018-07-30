@@ -17,7 +17,7 @@
   "lasp_support": {:hex, :lasp_support, "0.0.3", "c1b7e1a472037ae82c71d2d16a10b7d644a621b66ae5afe834cecf170f2e9169", [:rebar3], [{:lager, "~>3.5", [hex: :lager, repo: "hexpm", optional: false]}, {:time_compat, "~>0.0.1", [hex: :time_compat, repo: "hexpm", optional: false]}], "hexpm"},
   "mime": {:hex, :mime, "1.2.0", "78adaa84832b3680de06f88f0997e3ead3b451a440d183d688085be2d709b534", [:mix], [], "hexpm"},
   "numerix": {:hex, :numerix, "0.5.1", "f7511ab028719eeecc2a55d9244508b647e407cde6b17693558ea1e05c233039", [:mix], [{:flow, "~> 0.13", [hex: :flow, repo: "hexpm", optional: false]}], "hexpm"},
-  "partisan": {:git, "https://github.com/lasp-lang/partisan.git", "0fb8e4fc382dbbc6bdf95289a2d4d09ab1524d49", []},
+  "partisan": {:git, "https://github.com/GrispLasp/partisan.git", "b18b79e281ccd2410aa3f66ea64486edeef61067", []},
   "plug": {:hex, :plug, "1.5.1", "1ff35bdecfb616f1a2b1c935ab5e4c47303f866cb929d2a76f0541e553a58165", [:mix], [{:cowboy, "~> 1.0.1 or ~> 1.1 or ~> 2.3", [hex: :cowboy, repo: "hexpm", optional: true]}, {:mime, "~> 1.0", [hex: :mime, repo: "hexpm", optional: false]}], "hexpm"},
   "plumtree": {:hex, :plumtree, "0.5.0", "f3521ce631ad22ac00635e79c7f046a163bd1135889cdc1d0b18ab577f76ec70", [:rebar3], [{:lager, "~>3.5", [hex: :lager, repo: "hexpm", optional: false]}, {:lasp_support, "~>0.0", [hex: :lasp_support, repo: "hexpm", optional: false]}, {:partisan, "~>1.2", [hex: :partisan, repo: "hexpm", optional: false]}, {:rand_compat, "~>0.0.3", [hex: :rand_compat, repo: "hexpm", optional: false]}, {:time_compat, "~>0.0.1", [hex: :time_compat, repo: "hexpm", optional: false]}], "hexpm"},
   "poison": {:hex, :poison, "3.1.0", "d9eb636610e096f86f25d9a46f35a9facac35609a7591b3be3326e99a0484665", [:mix], [], "hexpm"},

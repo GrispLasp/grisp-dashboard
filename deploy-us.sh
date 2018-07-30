@@ -8,8 +8,8 @@ set -e
 # programmatically. You should have both AWS_ACCESS_KEY_ID and
 # AWS_SECRET_ACCESS_KEY from when we created the admin user.
 # AWS_DEFAULT_REGION is the code for the aws region you chose, e.g., eu-west-2.
-AWS_ACCESS_KEY_ID=AKIAIFNYABN4XZZWP4TA
-AWS_SECRET_ACCESS_KEY=xENKyBUKwpluYqdvRocuwAdJwNpjVMP9XGd+8gON
+AWS_ACCESS_KEY_ID=$1
+AWS_SECRET_ACCESS_KEY=$2
 AWS_DEFAULT_REGION=us-east-1
 PROFILE_NAME=grisplasp-us
 
@@ -24,16 +24,14 @@ AWS_ECS_DOCKER_IMAGE=grisplasp:latest
 AWS_ECS_CLUSTER_NAME=grisplasp-us
 
 
+
+
 # Set runtime ENV.
 # These are the runtime environment variables.
 # Note that HOST needs to be set.
 NODE_NAME=server2
 HOST=ec2-18-206-71-67.compute-1.amazonaws.com
-HOSTNAME=ec2-18-206-71-67.compute-1.amazonaws.com
 REMOTE_HOST_1=server1@ec2-18-185-18-147.eu-central-1.compute.amazonaws.com
-
-# PEER_PORT=9001
-# HOST=127.0.0.1
 
 # Build container.
 # As we did before, but now we are going to build the Docker image that will
@@ -96,5 +94,6 @@ fi
 ecs-cli compose \
   --file docker-compose.yml \
   --project-name "$AWS_ECS_PROJECT_NAME" \
+  --ecs-params ecs-params.yml \
   service up \
   --aws-profile $PROFILE_NAME

@@ -6,11 +6,7 @@ defmodule Webserver.Supervisor do
   end
 
   def init(:ok) do
-    # children = [
-    #   {Webserver.NodePinger, name: Webserver.NodePinger},
-    #   {Webserver.NodeClient, name: Webserver.NodeClient},
-    # ]
-    #
+
     # Supervisor.init(children, strategy: :one_for_one)
     children = case mode() do
         :computation_only ->

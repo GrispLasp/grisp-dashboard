@@ -8,16 +8,9 @@ services:
       - REMOTE_HOST_1=server1@ec2-18-185-18-147.eu-central-1.compute.amazonaws.com
       - PEER_PORT=$PEER_PORT
       - REPLACE_OS_VARS=true
-    hostname: ec2-18-206-71-67.compute-1.amazonaws.comNAME
     ports:
       - "80:80"
       - "8080:8080"
       - "4000:4000"
       - "4369:4369"
       - "9001:9001"
-      - "9002:9002"
-      - "55500:55500"
-      - "55501:55501"
-    extra_hosts:
-      - "ec2-18-185-18-147.eu-central-1.compute.amazonaws.com:18.185.18.147"
-      - "ec2-18-206-71-67.compute-1.amazonaws.com:0.0.0.0"
