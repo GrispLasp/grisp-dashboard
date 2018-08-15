@@ -57,7 +57,7 @@ class SidebarView extends React.Component {
                                                         return <li key={index} onClick={(e) => this.goToUrl(e, `/node/${node.name}`)}>
                                                             <a><span className={node.alive
                                                                 ? "online"
-                                                                : "offline"}/> {node.name.split('@')[0]}</a>
+                                                                : "offline"}/> {node.name.split('@')[1]}</a>
                                                         </li>
                                                     }})
                                                 : null

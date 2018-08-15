@@ -23,57 +23,62 @@ class NodesView extends React.Component {
     }
   }
 
-  generatePlots = (nodesData) => {
+  /////////////////////////////////////////////
+  // Experimental Linear Regression plotting //
+  /////////////////////////////////////////////
 
-      let data1 = this.generateScatterPlot(nodesData)
-      let data2 = this.generateLinearRegression(nodesData)
 
-      this.setState({scatterPlot: data1, linearRegressionPlot: data2})
-  }
-
-  generateScatterPlot = (nodesData) => {
-
-      let colors = ['rgb(215,48,39)','rgb(69,117,180)']
-
-      let data = nodesData.map((node, index) => {
-        return {
-            x: node.als_state.data.xs,
-            y: node.als_state.data.ys,
-            type: 'scatter',
-            mode: 'markers',
-            name: node.name,
-            marker: {color: colors[index]},
-        };
-      });
-
-      let layout = {
-          title: 'Nodes ambient light scatter plot'
-      };
-      let res = {data: data, layout: layout}
-      return res;
-
-  }
-
-  generateLinearRegression = (nodesData) => {
-    let colors = ['rgb(215,48,39)','rgb(69,117,180)']
-
-    let data = nodesData.map((node, index) => {
-      let xData = _.range(node.als_state.predictions.length)
-      return {
-          x: xData,
-          y: node.als_state.predictions,
-          type: 'scatter',
-          name: node.name,
-          marker: {color: colors[index]},
-      };
-    });
-
-    let layout = {
-        title: 'Nodes ambient light linear regression'
-    };
-    let res = {data: data, layout: layout}
-    return res;
-  }
+  // generatePlots = (nodesData) => {
+  //
+  //     let data1 = this.generateScatterPlot(nodesData)
+  //     let data2 = this.generateLinearRegression(nodesData)
+  //
+  //     this.setState({scatterPlot: data1, linearRegressionPlot: data2})
+  // }
+  //
+  // generateScatterPlot = (nodesData) => {
+  //
+  //     let colors = ['rgb(215,48,39)','rgb(69,117,180)']
+  //
+  //     let data = nodesData.map((node, index) => {
+  //       return {
+  //           x: node.als_state.data.xs,
+  //           y: node.als_state.data.ys,
+  //           type: 'scatter',
+  //           mode: 'markers',
+  //           name: node.name,
+  //           marker: {color: colors[index]},
+  //       };
+  //     });
+  //
+  //     let layout = {
+  //         title: 'Nodes ambient light scatter plot'
+  //     };
+  //     let res = {data: data, layout: layout}
+  //     return res;
+  //
+  // }
+  //
+  // generateLinearRegression = (nodesData) => {
+  //   let colors = ['rgb(215,48,39)','rgb(69,117,180)']
+  //
+  //   let data = nodesData.map((node, index) => {
+  //     let xData = _.range(node.als_state.predictions.length)
+  //     return {
+  //         x: xData,
+  //         y: node.als_state.predictions,
+  //         type: 'scatter',
+  //         name: node.name,
+  //         marker: {color: colors[index]},
+  //     };
+  //   });
+  //
+  //   let layout = {
+  //       title: 'Nodes ambient light linear regression'
+  //   };
+  //   let res = {data: data, layout: layout}
+  //   return res;
+  // }
 
   render() {
     const {nodes} = this.props;
@@ -82,7 +87,11 @@ class NodesView extends React.Component {
 
                <div className="main-container">
 
-      <h1>
+                 <h1> General information on nodes</h1>
+
+                 <p>There are {nodes.length} nodes in the cluster.</p>
+
+      {/* <h1>
           Ambient light Regression
       </h1>
 
@@ -105,7 +114,7 @@ class NodesView extends React.Component {
 
                     </div>
                 : null
-        }
+        } */}
 
     </div>
   </div>);

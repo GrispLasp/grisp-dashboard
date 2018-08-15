@@ -20,8 +20,7 @@ defmodule Webserver.Supervisor do
         :full ->
             [
                 {Webserver.NodePinger, name: Webserver.NodePinger},
-                {Webserver.NodeClient, name: Webserver.NodeClient},
-                {Webserver.Regression, name: Webserver.Regression}
+                {Webserver.NodeClient, name: Webserver.NodeClient}
             ]
         _ ->
             []

@@ -44,7 +44,7 @@ defmodule Webserver.MixProject do
       {:cors_plug, "~> 1.5"},
       {:exsamples, "~> 0.1.0"},
       {:numerix, "~> 0.5.1"},
-      # TODO : compare exfmt vs mix format (probably not worth it)
+      {:partisan, git: "https://github.com/GrispLasp/partisan.git", override: true},
       {:exfmt, "~> 0.1.0"},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]

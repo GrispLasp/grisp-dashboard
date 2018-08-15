@@ -7,15 +7,17 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import Overview from './OverviewView';
 import Light from './LightView';
+import Pressure from './PressureView';
 import Temperature from './TemperatureView';
 import Gyro from './GyroView';
-import Room from './RoomView';
+import Magnetic from './MagneticFieldView';
+
 import 'react-tabs/style/react-tabs.scss';
 
 class NodeView extends React.Component {
     constructor(props) {
         super(props);
-        const tabs = ["overview", "temperature", "light", "room"];
+        const tabs = ["overview", "temperature", "light", "pressure", "gyro", "magnetic"];
         let tabIndex = 0;
         if (this.props.location.hash !== '') {
             const hash = this.props.location.hash.substr(1, this.props.location.hash.length)
@@ -31,8 +33,8 @@ class NodeView extends React.Component {
 
     componentDidMount() {
         const {dispatch} = this.props
-        // let intervalId = setInterval(this.updateNodes.bind(this), 10000);
-        // this.setState({intervalId: intervalId});
+        let intervalId = setInterval(this.updateNodes.bind(this), 60000);
+        this.setState({intervalId: intervalId});
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -53,7 +55,7 @@ class NodeView extends React.Component {
     }
 
     componentWillUnmount(){
-       // clearInterval(this.state.intervalId);
+       clearInterval(this.state.intervalId);
     }
 
     updateNodes(){
@@ -95,8 +97,9 @@ class NodeView extends React.Component {
                                               <Tab>Overview </Tab>
                                               <Tab>Temperature</Tab>
                                               <Tab>Light</Tab>
+                                              <Tab>Pressure</Tab>
                                               <Tab>Gyro</Tab>
-                                              <Tab>Room</Tab>
+                                              <Tab>Magnetic Field</Tab>
                                           </TabList>
 
                                           <TabPanel>
@@ -112,12 +115,17 @@ class NodeView extends React.Component {
                                           </TabPanel>
 
                                           <TabPanel>
+                                              <Pressure node={node}/>
+                                          </TabPanel>
+
+                                          <TabPanel>
                                               <Gyro node={node}/>
                                           </TabPanel>
 
                                           <TabPanel>
-                                              <Room node={node}/>
+                                              <Magnetic node={node}/>
                                           </TabPanel>
+
 
                                       </Tabs>
 

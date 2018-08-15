@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {ResponsiveLine} from '@nivo/line'
 import _ from 'lodash'
 
-export default class TemperatureView extends React.Component {
+export default class PressureView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,7 +14,7 @@ export default class TemperatureView extends React.Component {
         const {node} = this.props;
         console.log(node)
         if (node && !this.state.chartData) {
-            this.generateTempData(node.data.temp)
+            this.generatePressData(node.data.press)
         }
 
     }
@@ -22,7 +22,7 @@ export default class TemperatureView extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.props.node) {
             if (!_.isEqual(prevProps.node, this.props.node)) {
-                this.generateTempData(this.props.node.data.temp)
+                this.generatePressData(this.props.node.data.press)
             }
         }
     }
@@ -33,12 +33,12 @@ export default class TemperatureView extends React.Component {
     //      }
     // }
 
-    generateTempData(nodeData) {
+    generatePressData(nodeData) {
 
         // console.log(nodeData)
 
-        let steps = nodeData.map((temp, index) => {
-            return {x: index, y: temp}
+        let steps = nodeData.map((press, index) => {
+            return {x: index, y: press}
         })
         // console.log(steps)
 
@@ -55,13 +55,13 @@ export default class TemperatureView extends React.Component {
         // console.log(this.state.chartData)
 
         if (node && !this.state.chartData) {
-            this.generateTempData(node.data.temp)
+            this.generatePressData(node.data.temp)
         }
 
         return (<div>
 
             <h1>
-                Temperature Panel
+                Pressure Panel
             </h1>
 
             {
@@ -71,7 +71,7 @@ export default class TemperatureView extends React.Component {
                             <div className="charts-container">
 
                                 <div className="chart-title">
-                                    Temperature/Minute chart</div>
+                                    Pressure/Minute chart</div>
                                 <div className="charts">
                                     <ResponsiveLine data={this.state.chartData} curve="natural" margin={{
                                             "top" : 50,
@@ -94,7 +94,7 @@ export default class TemperatureView extends React.Component {
                                             "legend" : "temperature",
                                             "legendOffset" : -40,
                                             "legendPosition" : "center"
-                                        }} dotSize={10} colors="pastel1" dotColor="inherit:darker(0.3)" dotBorderWidth={2} dotBorderColor="#ffffff" enableDotLabel={true} dotLabel="y" dotLabelYOffset={-12} animate={true} motionStiffness={90} motionDamping={15} legends={[{
+                                        }} dotSize={10} colors="pastel2" dotColor="inherit:darker(0.3)" dotBorderWidth={2} dotBorderColor="#ffffff" enableDotLabel={true} dotLabel="y" dotLabelYOffset={-12} animate={true} motionStiffness={90} motionDamping={15} legends={[{
                                                 "anchor": "bottom-right",
                                                 "direction": "column",
                                                 "translateX": 100,

@@ -14,7 +14,7 @@ export default class GyroView extends React.Component {
       const {node} = this.props;
       console.log(node)
       if (node && !this.state.chartData) {
-          this.generateGyroData(node.data.gyro)
+          this.generateMagData(node.data.mag)
       }
 
   }
@@ -22,17 +22,17 @@ export default class GyroView extends React.Component {
   componentDidUpdate(prevProps, prevState) {
       if (this.props.node) {
           if (!_.isEqual(prevProps.node, this.props.node)) {
-              this.generateGyroData(this.props.node.data.gyro)
+              this.generateMagData(this.props.node.data.mag)
           }
       }
   }
 
-  generateGyroData(nodeData) {
+  generateMagData(nodeData) {
 
-      console.log(nodeData)
+      // console.log(nodeData)
 
-      let xData = nodeData.map((gyro, index) => {
-          return {x: index, y: gyro[0]}
+      let xData = nodeData.map((mag, index) => {
+          return {x: index, y: mag[0]}
       })
       let x = {
         "id": "x",
@@ -40,8 +40,8 @@ export default class GyroView extends React.Component {
         "data": xData
       }
 
-      let yData = nodeData.map((gyro, index) => {
-          return {x: index, y: gyro[1]}
+      let yData = nodeData.map((mag, index) => {
+          return {x: index, y: mag[1]}
       })
       let y = {
         "id": "y",
@@ -49,8 +49,8 @@ export default class GyroView extends React.Component {
         "data": yData
       }
 
-      let zData = nodeData.map((gyro, index) => {
-          return {x: index, y: gyro[2]}
+      let zData = nodeData.map((mag, index) => {
+          return {x: index, y: mag[2]}
       })
       let z = {
         "id": "z",
@@ -74,13 +74,14 @@ export default class GyroView extends React.Component {
     const {node} = this.props;
 
     if (node && !this.state.chartData) {
-        this.generateGyroData(node.data.gyro)
+        this.generateMagData(node.data.mag)
     }
     return (<div>
 
       <h1>
-          Gyro Panel
+          Magnetic Field Panel
       </h1>
+
 
         {
             node && this.state.chartData
@@ -89,7 +90,7 @@ export default class GyroView extends React.Component {
                   <div className="charts-container">
 
                       <div className="chart-title">
-                          Gyro/Time chart</div>
+                          Magnetic Field/Time chart</div>
                       <div className="charts">
                           <ResponsiveLine data={this.state.chartData} curve="natural" margin={{
                                   "top" : 50,
