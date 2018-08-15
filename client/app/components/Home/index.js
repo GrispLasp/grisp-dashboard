@@ -12,6 +12,10 @@ export default class HomeView extends React.Component {
                      Dashboard
                 </h1>
 
+                <p>
+                  Welcome to the GRiSP Edge cluster Dashboard.
+                </p>
+
             </div>
         </div>);
     }

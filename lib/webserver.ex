@@ -14,8 +14,6 @@ defmodule Webserver do
     Supervisor.start_link(children, strategy: :one_for_one)
   end
 
-
-
   def port do
     Application.get_env(:webserver, :port)
   end

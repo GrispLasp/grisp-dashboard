@@ -2,26 +2,30 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :webserver, port: 8081
-config :lasp, [
-  membership: true,
-  mode: :state_based,
+config :webserver,
+    port: 8081,
+    # mode: :computation_only
+    mode: :full
+
+config :lasp,
+  membership: false,
+  mode: :delta_based,
   storage_backend: :lasp_ets_storage_backend,
-  delta_interval: 100
-]
-config :plumtree, [
-  broadcast_exchange_timer: 100,
+  #delta_interval: 1000,
+  #propagate_on_update: true,
+  plumtree_peer_refresh_interval: 1000,
+  state_sync_interval:  1000
+
+config :plumtree,
+  broadcast_exchange_timer: 2000,
   broadcast_mods: [:lasp_plumtree_backend]
-]
-config :partisan, [
-  partisan_peer_service_manager: :partisan_hyparview_peer_service_manager,
-  partisan_port: 50000
-]
-config :lager,  [
-  handlers: [
-    lager_console_backend: :critical,
-  ]
-]
+
+config :partisan,
+  partisan_peer_service_manager: :partisan_hyparview_peer_service_manager
+ config :lager,
+   handlers: [
+     level: :debug
+   ]
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this

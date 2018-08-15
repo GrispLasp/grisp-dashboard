@@ -15,33 +15,39 @@ defmodule Webserver.NodePinger do
   end
 
   def handle_info({:full_ping}, _state) do
-    now = :os.system_time
-    IO.puts "Now is #{now}"
-    pinged_nodes = full_ping_fun()
-    IO.puts "Pinged nodes #{inspect pinged_nodes}"
+    now = :os.system_time()
+    IO.puts("Now is #{now}")
+    pinged_nodes = full_ping()
+    IO.puts("Pinged nodes #{inspect(pinged_nodes)}")
     Process.send_after(self(), {:full_ping}, 10000)
     {:noreply, %{:time_pinged => now, :pinged_nodes => pinged_nodes}}
   end
 
-
   def handle_info(msg, state) do
-    IO.puts "Msg received is #{inspect msg}"
+    IO.puts("Msg received is #{inspect(msg)}")
     {:noreply, state}
   end
 
   ## Private functions
 
-  def full_ping_fun() do
+  # :lasp_peer_service.members()
+
+  def full_ping() do
     IO.puts "Starting full ping"
-    nodes_list = [:generic_node_1@GrispAdhoc, :generic_node_2@GrispAdhoc]
+    # name = "node@my_grisp_board_1"
+    # :lasp.update({name, :state_gset}, {:add, "hello"}, self())
+    # {:ok, x}  = :lasp.query({name, :state_gset})
+    # y = :sets.to_list(x)
+    # IO.puts "#{inspect y}"
+    # IO.puts "#{inspect x}"
+    nodes_list = Enum.map(1..2, fn number ->
+      String.to_atom(Enum.join(["node@my_grisp_board", Integer.to_string(number)], "_"))
+     end)
+    # IO.puts "#{inspect nodes_list}"
     for node <- nodes_list, :net_adm.ping(node) == :pong, do: fn node ->
       :lasp_peer_service.join(node)
       IO.puts "joined #{node}"
       node
     end.(node)
   end
-
-
-
-
 end

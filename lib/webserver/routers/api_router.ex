@@ -1,19 +1,17 @@
 defmodule Webserver.ApiRouter do
   use Plug.Router
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     use Plug.Debugger
   end
 
-  plug :match
-  plug :dispatch
-
+  plug(:match)
+  plug(:dispatch)
 
   # Root path
   get "/" do
     send_resp(conn, 200, "Health check OK")
   end
-
 
   get "/alive-nodes" do
     node_pinger_pid = Process.whereis(Webserver.NodePinger)
@@ -22,27 +20,50 @@ defmodule Webserver.ApiRouter do
     send_resp(conn, 200, body)
   end
 
-  get "/nodes" do
-    crdt_list = Webserver.NodeClient.get_crdt()
-    ping_result = Process.whereis(Webserver.NodePinger) |> :sys.get_state
-    IO.puts "pinged nodes #{inspect ping_result}"
-    nodes_map = Enum.into(crdt_list, [], fn {name, avg, counter, hour_avg, hour_data} ->
-      is_alive =  Enum.member?(ping_result[:pinged_nodes], name) # Check if node has been pinged, if so, mark as alive
-      %{:name => name, :avg => avg, :counter => counter, :hour_avg => hour_avg, :hour_data => hour_data, :alive => is_alive}
-    end)
 
-    nodes_map = %{:nodes => nodes_map, :last_ping_time => ping_result[:time_pinged]}
+  get "/nodes" do
+    nodes_map = generate_nodes_map(:all)
     IO.puts("nodes_map is #{inspect nodes_map}")
     body = Poison.encode!(nodes_map)
     send_resp(conn, 200, body)
   end
 
-
   get "/node/:node" do
-    crdt_list = Webserver.NodeClient.get_crdt()
-    node_map = for {name,avg,counter} <- crdt_list, name == String.to_atom(node), do: %{:name => name, :avg => avg, :counter => counter}
-    body = Poison.encode!(node_map)
+    nodes_map =  generate_nodes_map(node)
+    IO.puts("nodes_map is #{inspect nodes_map}")
+    body = Poison.encode!(nodes_map)
     send_resp(conn, 200, body)
   end
 
+  def generate_nodes_map(who) do
+    crdt = Webserver.NodeClient.get_crdt(who, :state_gset)
+    ping_result = Process.whereis(Webserver.NodePinger) |> :sys.get_state
+
+    # IO.puts "crdt  #{inspect crdt}"
+    # IO.puts "pinged nodes #{inspect ping_result}"
+
+    map = %{:temp => [], :press => [], :als => [], :gyro => [], :mag => []}
+    nodes = Enum.map(crdt, fn {node, data} ->
+      is_alive =  Enum.member?(ping_result[:pinged_nodes],  String.to_atom(node)) # Check if node has been pinged, if so, mark as alive
+      new_map = Enum.reduce(data, map , fn list, acc ->
+          t = Enum.at(list,0)
+          als = Enum.at(list,1)
+          press = Float.round(Enum.at(list,2),2)
+          temp = Float.round(Enum.at(list,3),2)
+          mag = Enum.map(Enum.at(list,4), fn x -> Float.round(x,2) end)
+          gyro = Enum.map(Enum.at(list,5), fn x -> Float.round(x,2) end)
+          acc = Map.update!(acc, :als, fn old_list -> old_list ++ [als] end)
+          acc = Map.update!(acc, :press, fn old_list -> old_list ++ [press] end)
+          acc = Map.update!(acc, :temp, fn old_list -> old_list ++ [temp] end)
+          acc = Map.update!(acc, :mag, fn old_list -> old_list ++ [mag] end)
+          acc = Map.update!(acc, :gyro, fn old_list -> old_list ++ [gyro] end)
+      end)
+      %{:name => node, :alive => is_alive, :data => new_map}
+    end)
+    IO.puts "nodes  #{inspect nodes}"
+    nodes_map = %{:nodes => nodes,:last_ping_time => ping_result[:time_pinged]}
+    IO.puts("nodes_map is #{inspect nodes_map}")
+    nodes_map
+
+  end
 end
