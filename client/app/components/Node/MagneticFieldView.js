@@ -110,7 +110,7 @@ export default class GyroView extends React.Component {
                                   "tickSize" : 5,
                                   "tickPadding" : 5,
                                   "tickRotation" : 0,
-                                  "legend" : "Axises",
+                                  "legend" : "mf",
                                   "legendOffset" : -40,
                                   "legendPosition" : "center"
                               }} dotSize={10} colors="set3" dotColor="inherit:darker(0.3)" dotBorderWidth={2} dotBorderColor="#ffffff" enableDotLabel={true} dotLabel="y" dotLabelYOffset={-12} animate={true} motionStiffness={90} motionDamping={15} legends={[{

@@ -71,7 +71,7 @@ export default class PressureView extends React.Component {
                             <div className="charts-container">
 
                                 <div className="chart-title">
-                                    Pressure/Minute chart</div>
+                                    Pressure/Time chart</div>
                                 <div className="charts">
                                     <ResponsiveLine data={this.state.chartData} curve="natural" margin={{
                                             "top" : 50,
@@ -91,7 +91,7 @@ export default class PressureView extends React.Component {
                                             "tickSize" : 5,
                                             "tickPadding" : 5,
                                             "tickRotation" : 0,
-                                            "legend" : "temperature",
+                                            "legend" : "pressure",
                                             "legendOffset" : -40,
                                             "legendPosition" : "center"
                                         }} dotSize={10} colors="pastel2" dotColor="inherit:darker(0.3)" dotBorderWidth={2} dotBorderColor="#ffffff" enableDotLabel={true} dotLabel="y" dotLabelYOffset={-12} animate={true} motionStiffness={90} motionDamping={15} legends={[{

@@ -71,7 +71,7 @@ export default class TemperatureView extends React.Component {
                             <div className="charts-container">
 
                                 <div className="chart-title">
-                                    Temperature/Minute chart</div>
+                                    Temperature/Time chart</div>
                                 <div className="charts">
                                     <ResponsiveLine data={this.state.chartData} curve="natural" margin={{
                                             "top" : 50,

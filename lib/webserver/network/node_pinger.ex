@@ -10,7 +10,7 @@ defmodule Webserver.NodePinger do
   ## Server Callbacks
 
   def init(:ok) do
-    Process.send_after(self(), {:full_ping}, 1000)
+    Process.send_after(self(), {:full_ping}, 20000)
     {:ok, %{}}
   end
 
@@ -19,7 +19,7 @@ defmodule Webserver.NodePinger do
     IO.puts("Now is #{now}")
     pinged_nodes = full_ping()
     IO.puts("Pinged nodes #{inspect(pinged_nodes)}")
-    Process.send_after(self(), {:full_ping}, 10000)
+    Process.send_after(self(), {:full_ping}, 5000)
     {:noreply, %{:time_pinged => now, :pinged_nodes => pinged_nodes}}
   end
 
@@ -40,7 +40,7 @@ defmodule Webserver.NodePinger do
     # y = :sets.to_list(x)
     # IO.puts "#{inspect y}"
     # IO.puts "#{inspect x}"
-    nodes_list = Enum.map(1..2, fn number ->
+    nodes_list = Enum.map(1..3, fn number ->
       String.to_atom(Enum.join(["node@my_grisp_board", Integer.to_string(number)], "_"))
      end)
     # IO.puts "#{inspect nodes_list}"

@@ -45,13 +45,15 @@ defmodule Webserver.ApiRouter do
     map = %{:temp => [], :press => [], :als => [], :gyro => [], :mag => []}
     nodes = Enum.map(crdt, fn {node, data} ->
       is_alive =  Enum.member?(ping_result[:pinged_nodes],  String.to_atom(node)) # Check if node has been pinged, if so, mark as alive
-      new_map = Enum.reduce(data, map , fn list, acc ->
-          t = Enum.at(list,0)
-          als = Enum.at(list,1)
-          press = Float.round(Enum.at(list,2),2)
-          temp = Float.round(Enum.at(list,3),2)
-          mag = Enum.map(Enum.at(list,4), fn x -> Float.round(x,2) end)
-          gyro = Enum.map(Enum.at(list,5), fn x -> Float.round(x,2) end)
+      new_data = Enum.sort(data, &(hd(&1) <= hd(&2)))
+      IO.puts "new data is #{inspect new_data}"
+      new_map = Enum.reduce(new_data, map , fn list, acc ->
+          t = Enum.at(list,1)
+          als = Enum.at(list,2)
+          press = Float.round(Enum.at(list,3),2)
+          temp = Float.round(Enum.at(list,4),2)
+          mag = Enum.map(Enum.at(list,5), fn x -> Float.round(x,2) end)
+          gyro = Enum.map(Enum.at(list,6), fn x -> Float.round(x,2) end)
           acc = Map.update!(acc, :als, fn old_list -> old_list ++ [als] end)
           acc = Map.update!(acc, :press, fn old_list -> old_list ++ [press] end)
           acc = Map.update!(acc, :temp, fn old_list -> old_list ++ [temp] end)

@@ -32,14 +32,14 @@ defmodule Webserver.NodeClient do
    # Webserver.NodeClient.compute()
 
   def handle_call({:get_crdt, {name, type}}, _from, state) do
-    :lasp.query({<<"node@my_grisp_board_2">>, :state_gset})
+    # :lasp.query({<<"node@my_grisp_board_2">>, :state_gset})
     crdt = case name do
       :all ->
-        nodes_list = Enum.map(1..2, fn number ->
+        nodes_list = Enum.map(1..3, fn number ->
           Enum.join(["node@my_grisp_board", Integer.to_string(number)], "_")
          end)
          Enum.reduce(nodes_list, %{}, fn node, acc ->
-           {:ok, crdt_list} = :lasp.query({node, type}) 
+           {:ok, crdt_list} = :lasp.query({node, type})
            # IO.puts "#{inspect crdt_list}"
            crdt_data = :sets.to_list(crdt_list)
            Map.put(acc, node, crdt_data)
