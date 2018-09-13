@@ -10,7 +10,7 @@ defmodule Webserver.NodePinger do
   ## Server Callbacks
 
   def init(:ok) do
-    Process.send_after(self(), {:full_ping}, 20000)
+    Process.send_after(self(), {:full_ping}, 15000)
     {:ok, %{}}
   end
 
@@ -19,7 +19,7 @@ defmodule Webserver.NodePinger do
     IO.puts("Now is #{now}")
     pinged_nodes = full_ping()
     IO.puts("Pinged nodes #{inspect(pinged_nodes)}")
-    Process.send_after(self(), {:full_ping}, 5000)
+    Process.send_after(self(), {:full_ping}, 7500)
     {:noreply, %{:time_pinged => now, :pinged_nodes => pinged_nodes}}
   end
 

@@ -33,7 +33,7 @@ class NodeView extends React.Component {
 
     componentDidMount() {
         const {dispatch} = this.props
-        let intervalId = setInterval(this.updateNodes.bind(this), 1000);
+        let intervalId = setInterval(this.updateNodes.bind(this), 2500);
         this.setState({intervalId: intervalId});
     }
 

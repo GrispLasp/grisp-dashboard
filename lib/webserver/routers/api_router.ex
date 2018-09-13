@@ -46,7 +46,7 @@ defmodule Webserver.ApiRouter do
     nodes = Enum.map(crdt, fn {node, data} ->
       is_alive =  Enum.member?(ping_result[:pinged_nodes],  String.to_atom(node)) # Check if node has been pinged, if so, mark as alive
       new_data = Enum.sort(data, &(hd(&1) <= hd(&2)))
-      IO.puts "new data is #{inspect new_data}"
+      # IO.puts "new data is #{inspect new_data}"
       new_map = Enum.reduce(new_data, map , fn list, acc ->
           t = Enum.at(list,1)
           als = Enum.at(list,2)
