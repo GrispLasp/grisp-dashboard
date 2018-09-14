@@ -20,10 +20,10 @@ class SidebarView extends React.Component {
     }
 
     render() {
-        const {nodes, lastPingTime} = this.props
+        // const {nodes, lastPingTime} = this.props
         let sortedNodes
-        if (nodes) {
-            sortedNodes = _.sortBy(nodes, (n) => {
+        if (this.props.nodes) {
+            sortedNodes = _.sortBy(this.props.nodes, (n) => {
                 return n.name
             });
             sortedNodes.push({name: "All"})
@@ -36,7 +36,7 @@ class SidebarView extends React.Component {
                 Cluster
             </h1>
             {
-                nodes
+                this.props.nodes
                     ? <div style={{
                                 display: 'flex',
                                 flex: 1,
@@ -68,7 +68,7 @@ class SidebarView extends React.Component {
                             </div>
                             <div className="last-ping">
                                 Last ping at:
-                                <span>{moment.unix(lastPingTime / 1000000000).format("h:mm:ss a")}</span>
+                                <span>{moment.unix(this.props.lastPingTime / 1000000000).format("h:mm:ss a")}</span>
                             </div>
                         </div>
                     : null
@@ -80,6 +80,7 @@ class SidebarView extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     // console.log(state);
     const {nodesReq, isFetching} = state.nodesReducer
+    console.log(nodesReq)
     return {nodes: nodesReq.nodes, lastPingTime: nodesReq.lastPingTime}
 }
 

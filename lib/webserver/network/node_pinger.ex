@@ -19,7 +19,7 @@ defmodule Webserver.NodePinger do
     IO.puts("Now is #{now}")
     pinged_nodes = full_ping()
     IO.puts("Pinged nodes #{inspect(pinged_nodes)}")
-    Process.send_after(self(), {:full_ping}, 7500)
+    Process.send_after(self(), {:full_ping}, 11000)
     {:noreply, %{:time_pinged => now, :pinged_nodes => pinged_nodes}}
   end
 
@@ -29,7 +29,6 @@ defmodule Webserver.NodePinger do
   end
 
   ## Private functions
-
   # :lasp_peer_service.members()
 
   def full_ping() do

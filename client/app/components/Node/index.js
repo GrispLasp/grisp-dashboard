@@ -9,15 +9,17 @@ import Overview from './OverviewView';
 import Light from './LightView';
 import Pressure from './PressureView';
 import Temperature from './TemperatureView';
-import Gyro from './GyroView';
-import Magnetic from './MagneticFieldView';
+// import Gyro from './GyroView';
+// import Magnetic from './MagneticFieldView';
 
 import 'react-tabs/style/react-tabs.scss';
 
 class NodeView extends React.Component {
     constructor(props) {
         super(props);
-        const tabs = ["overview", "temperature", "light", "pressure", "gyro", "magnetic"];
+        // const tabs = ["overview", "temperature", "light", "pressure", "gyro", "magnetic"];
+        const tabs = ["overview", "temperature", "light", "pressure"];
+
         let tabIndex = 0;
         if (this.props.location.hash !== '') {
             const hash = this.props.location.hash.substr(1, this.props.location.hash.length)
@@ -33,7 +35,7 @@ class NodeView extends React.Component {
 
     componentDidMount() {
         const {dispatch} = this.props
-        let intervalId = setInterval(this.updateNodes.bind(this), 2500);
+        let intervalId = setInterval(this.updateNodes.bind(this), 3500);
         this.setState({intervalId: intervalId});
     }
 
@@ -98,8 +100,8 @@ class NodeView extends React.Component {
                                               <Tab>Temperature</Tab>
                                               <Tab>Light</Tab>
                                               <Tab>Pressure</Tab>
-                                              <Tab>Gyro</Tab>
-                                              <Tab>Magnetic Field</Tab>
+                                              {/* <Tab>Gyro</Tab> */}
+                                              {/* <Tab>Magnetic Field</Tab> */}
                                           </TabList>
 
                                           <TabPanel>
@@ -118,13 +120,13 @@ class NodeView extends React.Component {
                                               <Pressure node={node}/>
                                           </TabPanel>
 
-                                          <TabPanel>
+                                          {/* <TabPanel>
                                               <Gyro node={node}/>
                                           </TabPanel>
 
                                           <TabPanel>
                                               <Magnetic node={node}/>
-                                          </TabPanel>
+                                          </TabPanel> */}
 
 
                                       </Tabs>
