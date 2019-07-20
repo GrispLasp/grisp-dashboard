@@ -37,7 +37,7 @@
     "file-loader": "^1.1.5",
     "history": "^4.7.2",
     "html-webpack-plugin": "^2.30.1",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.13",
     "method-override": "^2.3.5",
     "moment": "^2.19.1",
     "node-fetch": "^2.1.1",
