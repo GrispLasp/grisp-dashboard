@@ -41,7 +41,7 @@
     "method-override": "^2.3.5",
     "moment": "^2.19.1",
     "node-fetch": "^2.1.1",
-    "node-sass": "^4.5.3",
+    "node-sass": "^7.0.0",
     "path": "^0.12.7",
     "plotly.js": "^1.39.1",
     "prop-types": "^15.5.10",
